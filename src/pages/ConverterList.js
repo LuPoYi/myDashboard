@@ -1,8 +1,7 @@
 import { Helmet } from 'react-helmet'
-import { Box, Container } from '@material-ui/core'
-import CustomerListResults from 'src/components/customer/CustomerListResults'
-import CustomerListToolbar from 'src/components/customer/CustomerListToolbar'
-import customers from 'src/__mocks__/customers'
+import { Box, Container, Grid } from '@material-ui/core'
+import CompoundInterest from 'src/components/converter/CompoundInterest'
+import Timestamp from 'src/components/converter/Timestamp'
 
 const ConverterList = () => (
   <>
@@ -15,11 +14,15 @@ const ConverterList = () => (
         minHeight: '100%',
         py: 3
       }}>
-      <Container maxWidth={false}>
-        <CustomerListToolbar />
-        <Box sx={{ pt: 3 }}>
-          <CustomerListResults customers={customers} />
-        </Box>
+      <Container maxWidth="lg">
+        <Grid container spacing={3}>
+          <Grid item lg={6} md={6} xs={12}>
+            <CompoundInterest />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <Timestamp />
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   </>
