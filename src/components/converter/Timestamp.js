@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Card, CardHeader, CardContent, Divider, Grid, TextField } from '@material-ui/core'
 
-const CompoundInterest = () => {
+const Timestamp = () => {
   const [date, setDate] = useState(Date())
   const [timestamp, setTimestamp] = useState(Math.floor(Date.now() / 1000))
 
@@ -45,4 +45,4 @@ const CompoundInterest = () => {
   )
 }
 
-export default CompoundInterest
+export default Timestamp
