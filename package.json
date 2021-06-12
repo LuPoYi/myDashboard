@@ -33,6 +33,7 @@
     "@material-ui/styles": "^4.10.0",
     "chart.js": "^2.9.4",
     "clsx": "^1.1.1",
+    "decimal.js": "^10.2.1",
     "firebase-tools": "^9.12.0",
     "formik": "^2.1.5",
     "history": "^5.0.0",

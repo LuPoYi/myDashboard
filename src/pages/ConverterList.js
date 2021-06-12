@@ -5,6 +5,7 @@ import Timestamp from 'src/components/converter/Timestamp'
 import Base64 from 'src/components/converter/Base64'
 import CamelCase from 'src/components/converter/CamelCase'
 import ColorCode from 'src/components/converter/ColorCode'
+import Gwei from 'src/components/converter/Gwei'
 
 const ConverterList = () => (
   <>
@@ -33,6 +34,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <ColorCode />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <Gwei />
           </Grid>
         </Grid>
       </Container>
