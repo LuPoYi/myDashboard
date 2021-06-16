@@ -7,7 +7,8 @@ import {
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Clock as ClockIcon
 } from 'react-feather'
 import NavItem from './NavItem'
 
@@ -32,6 +33,11 @@ const items = [
     href: '/app/defi',
     icon: ShoppingBagIcon,
     title: 'DeFi Lab'
+  },
+  {
+    href: '/app/pomodoro',
+    icon: ClockIcon,
+    title: 'Pomodoro'
   },
   {
     href: '/app/customers',
