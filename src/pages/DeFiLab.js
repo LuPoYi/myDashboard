@@ -22,7 +22,7 @@ const DeFiLab = () => {
   return (
     <>
       <Helmet>
-        <title>DeFiLab | Material Kit</title>
+        <title>DeFiLab</title>
       </Helmet>
       <Box
         sx={{

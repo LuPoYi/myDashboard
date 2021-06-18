@@ -10,7 +10,7 @@ import Gwei from 'src/components/converter/Gwei'
 const ConverterList = () => (
   <>
     <Helmet>
-      <title>Converters | Material Kit</title>
+      <title>Converters</title>
     </Helmet>
     <Box
       sx={{
