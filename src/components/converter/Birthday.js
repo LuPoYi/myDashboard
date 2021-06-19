@@ -28,7 +28,7 @@ const Birthday = () => {
           <Grid item md={6} xs={12}>
             <DatePicker
               mask="____-__-__"
-              inputFormat="yyyy-mm-dd"
+              inputFormat="yyyy-MM-dd"
               label="Birthday"
               value={birthday}
               onChange={handleBirthdayOnChange}
