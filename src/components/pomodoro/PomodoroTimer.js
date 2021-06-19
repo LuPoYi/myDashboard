@@ -1,65 +1,100 @@
 import { useState, useEffect } from 'react'
-import moment from 'moment'
-import { v4 as uuid } from 'uuid'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Box, Button, Card, CardContent, Grid, Typography } from '@material-ui/core'
-import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@material-ui/core'
+import ReplayIcon from '@material-ui/icons/Replay'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import PauseIcon from '@material-ui/icons/Pause'
 
 const PomodoroTimer = () => {
-  const [timer, setTimer] = useState(0)
-  const [countDownTime, setCountDownTime] = useState(5)
-  const [isRunning, setIsRunning] = useState(true)
-  const covertTimeToMinuteSecond = (_time) => {
-    console.log(_time)
-    new Date(1000 * _time).toISOString().substr(14, 5) // 25:00
-  }
+  const [timer, setTimer] = useState()
+  const [countDownTime, setCountDownTime] = useState(25 * 60)
+  const [isRunning, setIsRunning] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
 
-  const countDown = () => {
-    if (countDownTime > 0) setCountDownTime((prevState) => prevState - 1)
-  }
+  const covertTimeToMinuteSecond = (time) => new Date(1000 * time).toISOString().substr(14, 5) // 25:00
+  const countDown = () => countDownTime > 0 && setCountDownTime((prevState) => prevState - 1)
 
   useEffect(() => {
     if (countDownTime < 1) {
+      setTimer(false)
       clearInterval(timer)
       setIsRunning(false)
+      setIsFinished(true)
     }
   }, [countDownTime, timer])
 
   const startOnClick = () => {
-    if (timer == 0) {
-      setTimer(setInterval(countDown, 1000))
-      setIsRunning(true)
-    }
+    if (timer) return
+    setTimer(setInterval(countDown, 1000))
+    setIsRunning(true)
+  }
+
+  const pauseOnClick = () => {
+    if (!timer) return
+    clearInterval(timer)
+    setIsRunning(false)
+    setTimer(false)
   }
 
   return (
     <Card>
       <CardContent>
-        <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
-          <Grid item>
-            <Typography color="textSecondary" gutterBottom variant="h6">
+        <Grid container sx={{ justifyContent: 'center' }}>
+          <Grid>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              sx={{ mb: 3, textAlign: 'center' }}
+              variant="h5">
               Pomodoro
             </Typography>
-            <Typography color="textPrimary" variant="h3">
+            <Typography color="textPrimary" sx={{ fontSize: '120px', mb: 3, textAlign: 'center' }}>
               {covertTimeToMinuteSecond(countDownTime)}
             </Typography>
+
+            {isRunning ? (
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                startIcon={<PauseIcon />}
+                sx={{ py: 1, textAlign: 'center', fontSize: '20px' }}
+                onClick={pauseOnClick}>
+                Pause
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                startIcon={<PlayArrowIcon />}
+                sx={{ py: 1, textAlign: 'center', fontSize: '20px' }}
+                onClick={startOnClick}>
+                Start
+              </Button>
+            )}
           </Grid>
         </Grid>
-
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            pt: 2
-          }}>
-          <Button color="primary" variant="contained" onClick={startOnClick}>
-            START
-          </Button>
-          C: {countDownTime}
-          T: {timer}
-          {isRunning ? 'run' : 'stop'}
-        </Box>
       </CardContent>
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}>
+        {isFinished && (
+          <Typography color="textPrimary" sx={{ mr: 1 }}>
+            Done
+          </Typography>
+        )}
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<ReplayIcon />}
+          onClick={startOnClick}>
+          Replay
+        </Button>
+      </Box>
     </Card>
   )
 }

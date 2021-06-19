@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
-import { green } from '@material-ui/core/colors'
-import { Box, Button, Card, CardContent, Container, Grid, Typography } from '@material-ui/core'
+
+import { Box, Container, Grid } from '@material-ui/core'
 import PomodoroTimer from 'src/components/pomodoro//PomodoroTimer'
 
 const Pomodoro = () => {
