@@ -1,8 +1,9 @@
-import { createMuiTheme, colors } from '@material-ui/core';
-import shadows from './shadows';
-import typography from './typography';
+import { colors } from '@material-ui/core'
+import { createTheme } from '@material-ui/core/styles'
+import shadows from './shadows'
+import typography from './typography'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     background: {
       default: '#F4F6F8',
@@ -19,6 +20,6 @@ const theme = createMuiTheme({
   },
   shadows,
   typography
-});
+})
 
-export default theme;
+export default theme
