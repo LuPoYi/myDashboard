@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@material-ui/core'
-import ReplayIcon from '@material-ui/icons/Replay'
+import StopIcon from '@material-ui/icons/Stop'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import PauseIcon from '@material-ui/icons/Pause'
 
 const PomodoroTimer = () => {
+  const defaultTime = 25 * 60
   const [timer, setTimer] = useState()
-  const [countDownTime, setCountDownTime] = useState(25 * 60)
+  const [countDownTime, setCountDownTime] = useState(defaultTime)
   const [isRunning, setIsRunning] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
@@ -32,6 +33,13 @@ const PomodoroTimer = () => {
     if (!timer) return
     clearInterval(timer)
     setIsRunning(false)
+    setTimer(false)
+  }
+
+  const stopOnClick = () => {
+    setCountDownTime(defaultTime)
+    setIsRunning(false)
+    clearInterval(timer)
     setTimer(false)
   }
 
@@ -90,9 +98,9 @@ const PomodoroTimer = () => {
         <Button
           variant="contained"
           color="secondary"
-          startIcon={<ReplayIcon />}
-          onClick={startOnClick}>
-          Replay
+          startIcon={<StopIcon />}
+          onClick={stopOnClick}>
+          Stop
         </Button>
       </Box>
     </Card>
