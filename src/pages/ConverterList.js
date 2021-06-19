@@ -6,6 +6,7 @@ import Base64 from 'src/components/converter/Base64'
 import CamelCase from 'src/components/converter/CamelCase'
 import ColorCode from 'src/components/converter/ColorCode'
 import Gwei from 'src/components/converter/Gwei'
+import Birthday from 'src/components/converter/Birthday'
 
 const ConverterList = () => (
   <>
@@ -37,6 +38,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Gwei />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <Birthday />
           </Grid>
         </Grid>
       </Container>
