@@ -13,7 +13,7 @@ import {
 import NavItem from './NavItem'
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/images/avatars/hello.png',
   jobTitle: 'My Dashboard',
   name: 'Bob Lu'
 }

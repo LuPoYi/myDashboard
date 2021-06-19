@@ -5,13 +5,14 @@ const Timestamp = () => {
   const [date, setDate] = useState(Date())
   const [timestamp, setTimestamp] = useState(Math.floor(Date.now() / 1000))
 
+  const timestampHandleChange = (e) => {
+    setTimestamp(e.target.value)
+    setDate(new Date(parseInt(e.target.value) * 1000))
+  }
+
   const dateHandleChange = (e) => {
     setDate(e.target.value)
     setTimestamp(Date.parse(e.target.value) / 1000)
-  }
-  const timestampHandleChange = (e) => {
-    setTimestamp(e.target.value)
-    setDate(Date(parseInt(e.target.value) * 1000))
   }
 
   return (
@@ -23,20 +24,20 @@ const Timestamp = () => {
           <Grid item md={12} xs={12}>
             <TextField
               fullWidth
-              label="Date"
+              label="Timestamp"
               variant="outlined"
-              onChange={dateHandleChange}
-              value={date}
+              onChange={timestampHandleChange}
+              value={timestamp}
             />
           </Grid>
 
           <Grid item md={12} xs={12}>
             <TextField
               fullWidth
-              label="Timestamp"
+              label="Date"
               variant="outlined"
-              onChange={timestampHandleChange}
-              value={timestamp}
+              onChange={dateHandleChange}
+              value={date}
             />
           </Grid>
         </Grid>
