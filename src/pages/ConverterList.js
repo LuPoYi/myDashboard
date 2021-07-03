@@ -7,6 +7,7 @@ import CamelCase from 'src/components/converter/CamelCase'
 import ColorCode from 'src/components/converter/ColorCode'
 import Gwei from 'src/components/converter/Gwei'
 import Birthday from 'src/components/converter/Birthday'
+import DateCountdown from 'src/components/converter/DateCountdown'
 
 const ConverterList = () => (
   <>
@@ -41,6 +42,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Birthday />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <DateCountdown />
           </Grid>
         </Grid>
       </Container>
