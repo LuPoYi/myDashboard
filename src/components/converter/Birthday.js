@@ -3,7 +3,7 @@ import { Card, CardHeader, CardContent, Divider, Grid, TextField } from '@materi
 import DatePicker from '@material-ui/lab/DatePicker'
 
 const Birthday = () => {
-  const [age, setAge] = useState('') // 1y 2d
+  const [age, setAge] = useState('') // 1Y 2M 3D
   const [birthday, setBirthday] = useState(new Date('1989-06-17'))
 
   const handleBirthdayOnChange = (value) => setBirthday(value)
@@ -12,8 +12,9 @@ const Birthday = () => {
     try {
       const ageDifMs = new Date(Date.now() - birthday)
       const ageYear = Math.abs(ageDifMs.getUTCFullYear() - 1970)
+      const ageMonth = ageDifMs.getMonth()
       const ageDay = ageDifMs.getDate()
-      setAge(`${ageYear}Y ${ageDay}D`)
+      setAge(`${ageYear}Y ${ageMonth}M ${ageDay}D`)
     } catch (e) {
       console.log('error - birthday cannot convert', e)
     }

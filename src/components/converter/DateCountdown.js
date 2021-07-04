@@ -4,16 +4,17 @@ import DatePicker from '@material-ui/lab/DatePicker'
 
 const DateCountdown = () => {
   const [date, setDate] = useState(new Date(Date.now() + 10 * 24 * 60 * 60 * 1000))
-  const [dayRemaining, setDayRemaining] = useState('') // 1y 2d
+  const [dayRemaining, setDayRemaining] = useState('') // 1Y 2M 3D
 
   const handleDateOnChange = (value) => value > Date.now() && setDate(value)
 
   useEffect(() => {
     try {
       const dateDifMs = new Date(date - Date.now())
-      const ageYear = Math.abs(dateDifMs.getUTCFullYear() - 1970)
-      const ageDay = dateDifMs.getDate() - 1
-      setDayRemaining(`${ageYear}Y ${ageDay}D`)
+      const dateYear = Math.abs(dateDifMs.getUTCFullYear() - 1970)
+      const dateMonth = dateDifMs.getMonth()
+      const dateDay = dateDifMs.getDate() - 1
+      setDayRemaining(`${dateYear}Y ${dateMonth}M ${dateDay}D`)
     } catch (e) {
       console.log('error - date cannot convert', e)
     }
