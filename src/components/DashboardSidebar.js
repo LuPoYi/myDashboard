@@ -8,7 +8,8 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   Users as UsersIcon,
-  Clock as ClockIcon
+  Clock as ClockIcon,
+  DollarSign as DollarSignIcon
 } from 'react-feather'
 import NavItem from './NavItem'
 
@@ -58,6 +59,11 @@ const items = [
     href: '/app/settings',
     icon: SettingsIcon,
     title: 'Settings'
+  },
+  {
+    href: '/app/portfolio',
+    icon: DollarSignIcon,
+    title: 'DeFi Portfolio'
   }
 ]
 

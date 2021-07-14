@@ -9,6 +9,7 @@ import Dashboard from 'src/pages/Dashboard'
 import ProductList from 'src/pages/ProductList'
 import Pomodoro from 'src/pages/Pomodoro'
 import Settings from 'src/pages/Settings'
+import DeFiPortfolio from 'src/pages/DeFiPortfolio'
 import NotFound from 'src/pages/NotFound'
 
 const routes = [
@@ -23,7 +24,8 @@ const routes = [
       { path: 'pomodoro', element: <Pomodoro /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
-      { path: 'settings', element: <Settings /> }
+      { path: 'settings', element: <Settings /> },
+      { path: 'portfolio', element: <DeFiPortfolio /> }
     ]
   },
   {
