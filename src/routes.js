@@ -8,6 +8,8 @@ import DeFiLab from 'src/pages/DeFiLab'
 import Dashboard from 'src/pages/Dashboard'
 import ProductList from 'src/pages/ProductList'
 import Pomodoro from 'src/pages/Pomodoro'
+import Countdown from 'src/pages/Countdown'
+import CountdownPage from 'src/pages/CountdownPage'
 import Settings from 'src/pages/Settings'
 import DeFiPortfolio from 'src/pages/DeFiPortfolio'
 import NotFound from 'src/pages/NotFound'
@@ -22,6 +24,8 @@ const routes = [
       { path: 'converters', element: <ConverterList /> },
       { path: 'defi', element: <DeFiLab /> },
       { path: 'pomodoro', element: <Pomodoro /> },
+      { path: 'countdown', element: <Countdown /> },
+      { path: 'countdown-page', element: <CountdownPage /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },

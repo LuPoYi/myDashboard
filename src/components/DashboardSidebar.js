@@ -41,6 +41,11 @@ const items = [
     title: 'Pomodoro'
   },
   {
+    href: '/app/countdown',
+    icon: ClockIcon,
+    title: 'Countdown'
+  },
+  {
     href: '/app/customers',
     icon: UsersIcon,
     title: 'Customers'
