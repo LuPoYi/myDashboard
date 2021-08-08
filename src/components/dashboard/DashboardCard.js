@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-import { Avatar, Box, Card, CardContent, Grid, Typography } from '@material-ui/core'
-import MoneyIcon from '@material-ui/icons/Money'
+import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core'
 
 const DashboardCard = ({ title, content, description, icon, ...restProps }) => (
   <Card sx={{ height: '100%' }} {...restProps}>
