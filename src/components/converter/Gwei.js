@@ -17,10 +17,7 @@ function Gwei() {
     gwei: '1000000000',
     ether: '1'
   })
-
   const { wei, gwei, ether } = ethereumUnit
-
-  //  this.setState({ [event.target.name]: event.target.value });
 
   const handleEthereumUnitOnChange = (e, key) => {
     let targetValue, newWei, newGwei, newEther

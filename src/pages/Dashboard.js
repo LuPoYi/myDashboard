@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Box, Container, Grid } from '@material-ui/core'
-import Budget from 'src/components/dashboard//Budget'
-import EthereumGas from 'src/components/dashboard//EthereumGas'
-import TasksProgress from 'src/components/dashboard//TasksProgress'
-import TotalCustomers from 'src/components/dashboard//TotalCustomers'
-import { red, blue, green, orange } from '@material-ui/core/colors'
+import { Avatar, Box, Grid, Container } from '@material-ui/core'
+import DashboardCard from 'src/components/dashboard/DashboardCard'
+import { red, blue, green } from '@material-ui/core/colors'
+import MoneyIcon from '@material-ui/icons/Money'
 
 const Dashboard = () => {
   const [gasTracker, setGasTracker] = useState({
@@ -13,6 +11,13 @@ const Dashboard = () => {
     SafeGasPrice: null,
     ProposeGasPrice: null,
     FastGasPrice: null
+  })
+
+  const [price, setPrice] = useState({
+    ethbtc: null,
+    ethbtc_timestamp: null,
+    ethusd: null,
+    ethusd_timestamp: null
   })
 
   useEffect(() => {
@@ -24,9 +29,18 @@ const Dashboard = () => {
         (result) => {
           if (result?.message === 'OK') setGasTracker(result?.result)
         },
-        (error) => {
-          console.log('fetch api error', error)
-        }
+        (error) => console.log('fetch api error', error)
+      )
+
+    fetch(
+      'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=DGIQU4UGTA2UW72KABXMZ6A1BG5EAV1XW1'
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result?.message === 'OK') setPrice(result?.result)
+        },
+        (error) => console.log('fetch api error', error)
       )
   }, [])
 
@@ -44,26 +58,80 @@ const Dashboard = () => {
         <Container maxWidth={false}>
           <Grid container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <EthereumGas gwei={gasTracker?.SafeGasPrice} level={'Low'} bg={green[600]} />
+              <DashboardCard
+                title="Low"
+                content={gasTracker?.SafeGasPrice}
+                description="Ethereum Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: green[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
             </Grid>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <EthereumGas gwei={gasTracker?.ProposeGasPrice} level={'Average'} bg={blue[600]} />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <EthereumGas gwei={gasTracker?.FastGasPrice} level={'Fast'} bg={red[600]} />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <EthereumGas gwei={gasTracker?.LastBlock} level={'Block'} bg={orange[600]} />
+              <DashboardCard
+                title="Average"
+                content={gasTracker?.ProposeGasPrice}
+                description="Ethereum Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: blue[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <Budget />
+              <DashboardCard
+                title="Fast"
+                content={gasTracker?.FastGasPrice}
+                description="Ethereum Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: red[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
             </Grid>
+
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalCustomers />
+              <DashboardCard
+                title="Last Block"
+                content={gasTracker?.LastBlock}
+                description="Ethereum gas tracker"
+              />
             </Grid>
+
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TasksProgress />
+              <DashboardCard
+                title="ETH USD Price"
+                content={price?.ethusd}
+                description="Ethereum stats"
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title={'ETH BTC Price'}
+                content={price?.ethbtc}
+                description="Ethereum stats"
+              />
             </Grid>
           </Grid>
         </Container>
