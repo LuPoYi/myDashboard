@@ -37,8 +37,8 @@ const Countdown = () => {
           <Grid item lg={6} sm={6} xl={6} xs={12}>
             <Link
               to={{
-                pathname: '/app/countdown-page',
-                search: `?timestamp=${Date.parse(value)}`
+                pathname: '/countdownPage',
+                search: `?t=${Date.parse(value)}`
               }}
               target="_blank"
               rel="noopener">

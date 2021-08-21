@@ -25,7 +25,6 @@ const routes = [
       { path: 'defi', element: <DeFiLab /> },
       { path: 'pomodoro', element: <Pomodoro /> },
       { path: 'countdown', element: <Countdown /> },
-      { path: 'countdown-page', element: <CountdownPage /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
@@ -38,6 +37,7 @@ const routes = [
     children: [
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
+      { path: 'countdownPage', element: <CountdownPage /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
