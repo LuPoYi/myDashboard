@@ -4,6 +4,7 @@ import { Avatar, Box, Grid, Container } from '@material-ui/core'
 import DashboardCard from 'src/components/dashboard/DashboardCard'
 import { red, blue, green } from '@material-ui/core/colors'
 import MoneyIcon from '@material-ui/icons/Money'
+const BINANCE_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT']
 
 const Dashboard = () => {
   const [gasTracker, setGasTracker] = useState({
@@ -19,6 +20,32 @@ const Dashboard = () => {
     ethusd: null,
     ethusd_timestamp: null
   })
+
+  const [binanceTickers, setBinanceTickers] = useState([
+    {
+      symbol: 'BTCUSDT',
+      priceChange: '-465.43000000',
+      priceChangePercent: '-0.983',
+      weightedAvgPrice: '47940.17828752',
+      prevClosePrice: '47344.87000000',
+      lastPrice: '46879.44000000',
+      lastQty: '0.00041000',
+      bidPrice: '46885.74000000',
+      bidQty: '0.15546000',
+      askPrice: '46885.75000000',
+      askQty: '0.07967000',
+      openPrice: '47344.87000000',
+      highPrice: '49352.84000000',
+      lowPrice: '46560.01000000',
+      volume: '52341.26742400',
+      quoteVolume: '2509249692.10130679',
+      openTime: 1629882369964,
+      closeTime: 1629968769964,
+      firstId: 1024000300,
+      lastId: 1025862617,
+      count: 1862318
+    }
+  ])
 
   useEffect(() => {
     fetch(
@@ -42,6 +69,17 @@ const Dashboard = () => {
         },
         (error) => console.log('fetch api error', error)
       )
+
+    BINANCE_SYMBOLS.forEach((symbol) => {
+      fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            if (!result?.code) setBinanceTickers((prevState) => [...prevState, result])
+          },
+          (error) => console.log('fetch api error', error)
+        )
+    })
   }, [])
 
   return (
@@ -133,6 +171,18 @@ const Dashboard = () => {
                 description="Ethereum stats"
               />
             </Grid>
+
+            {/* binance tickers #FCD535 */}
+            {binanceTickers?.map(({ symbol, lastPrice }) => (
+              <Grid key={symbol} item lg={3} sm={6} xl={3} xs={12}>
+                <DashboardCard
+                  bg={'#FCD535'}
+                  title={`${symbol} Price`}
+                  content={lastPrice}
+                  description="Binance ticker"
+                />
+              </Grid>
+            ))}
           </Grid>
         </Container>
       </Box>

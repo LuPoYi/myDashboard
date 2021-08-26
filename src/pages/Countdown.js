@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { TextField, Box, Container, Grid, Button } from '@material-ui/core'
+import { TextField, Box, Container, Grid } from '@material-ui/core'
 import DateTimePicker from '@material-ui/lab/DateTimePicker'
 import { Link } from 'react-router-dom'
 
 const Countdown = () => {
   const [value, setValue] = useState(new Date())
-
-  const handleDeadlineOnClick = () => {
-    //window.open(url, '_blank')
-    //<Link to="myRoute" params={myParams} target="_blank">
-  }
 
   return (
     <>
