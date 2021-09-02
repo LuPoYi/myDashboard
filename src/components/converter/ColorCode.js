@@ -12,24 +12,30 @@ import {
 import ColorLensIcon from '@material-ui/icons/ColorLens'
 
 const ColorCode = () => {
-  const [red, setRed] = useState(0)
-  const [green, setGreen] = useState(0)
-  const [blue, setBlue] = useState(0)
-  const [hex, setHex] = useState('#000000')
+  const [color, setColor] = useState({
+    rgba: 'rgba(0,0,0,1)',
+    red: 0,
+    green: 0,
+    blue: 0,
+    alpha: 1,
+    hex: '#000000'
+  })
 
-  const handleRedChange = (e) => {
-    const value = e.target.value
-    value >= 0 && value <= 255 ? setRed(parseInt(value)) : setRed('')
+  const handleColorChange = (key) => (e) => {
+    const value = e?.target?.value
+
+    key === 'alpha'
+      ? setColor((prevColor) => ({
+          ...prevColor,
+          [key]: !value ? '' : parseFloat(value)
+        }))
+      : setColor((prevColor) => ({
+          ...prevColor,
+          [key]: !value ? '' : parseInt(value)
+        }))
   }
-  const handleGreenChange = (e) => {
-    let value = e.target.value
-    value >= 0 && value <= 255 ? setGreen(parseInt(value)) : setGreen('')
-  }
-  const handleBlueChange = (e) => {
-    const value = e.target.value
-    value >= 0 && value <= 255 ? setBlue(parseInt(value)) : setBlue('')
-  }
-  const handleHexChange = (e) => {
+
+  const handleHexChange = () => (e) => {
     let value = e.target.value
     let r = 1,
       g = -1,
@@ -41,40 +47,64 @@ const ColorCode = () => {
         g = parseInt(value.slice(3, 5), 16)
         b = parseInt(value.slice(5, 7), 16)
       }
-      setHex(value)
-      setRed(r)
-      setGreen(g)
-      setBlue(b)
+
+      setColor((prevColor) => ({
+        ...prevColor,
+        hex: value,
+        red: r,
+        green: g,
+        blue: b
+      }))
     }
+  }
+
+  const handleRgbaChange = () => (e) => {
+    const value = e?.target?.value
+    const match = value?.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/)
+
+    setColor((prevColor) => ({
+      ...prevColor,
+      rgba: match ? value : '',
+      red: match ? Number(match[1]) : '',
+      green: match ? Number(match[2]) : '',
+      blue: match ? Number(match[3]) : '',
+      alpha: match ? Number(match[4]) : ''
+    }))
   }
 
   const handleRandomColorOnClick = () => {
-    setRed(Math.floor(Math.random() * 256))
-    setGreen(Math.floor(Math.random() * 256))
-    setBlue(Math.floor(Math.random() * 256))
+    setColor((prevColor) => ({
+      ...prevColor,
+      red: Math.floor(Math.random() * 256),
+      green: Math.floor(Math.random() * 256),
+      blue: Math.floor(Math.random() * 256),
+      alpha: 1
+    }))
   }
 
   useEffect(() => {
-    if (!(red && green && blue)) {
-      setHex('')
+    if (!(color.red && color.green && color.blue)) {
+      setColor((prevColor) => ({
+        ...prevColor,
+        hex: '',
+        rgba: ''
+      }))
       return
     }
 
-    let r = parseInt(red).toString(16)
-    let g = parseInt(green).toString(16)
-    let b = parseInt(blue).toString(16)
+    let r = parseInt(color.red).toString(16)
+    let g = parseInt(color.green).toString(16)
+    let b = parseInt(color.blue).toString(16)
+    if (r.length === 1) r = '0' + r
+    if (g.length === 1) g = '0' + g
+    if (r.length === 1) b = '0' + b
 
-    if (r.length === 1) {
-      r = '0' + r
-    }
-    if (g.length === 1) {
-      g = '0' + g
-    }
-    if (r.length === 1) {
-      b = '0' + b
-    }
-    setHex('#' + r + g + b)
-  }, [red, green, blue])
+    setColor((prevColor) => ({
+      ...prevColor,
+      hex: '#' + r + g + b,
+      rgba: `rgba(${color.red},${color.green},${color.blue},${color.alpha})`
+    }))
+  }, [color.red, color.green, color.blue, color.alpha])
 
   return (
     <Card>
@@ -82,31 +112,50 @@ const ColorCode = () => {
       <Divider />
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item md={4} xs={12}>
+          <Grid item md={12} xs={12}>
+            <TextField
+              fullWidth
+              label="RGBA"
+              variant="outlined"
+              onChange={handleRgbaChange()}
+              value={color.rgba}
+            />
+          </Grid>
+          <Grid item md={3} xs={12}>
             <TextField
               fullWidth
               label="Red"
               variant="outlined"
-              onChange={handleRedChange}
-              value={red}
+              onChange={handleColorChange('red')}
+              value={color.red}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={3} xs={12}>
             <TextField
               fullWidth
               label="Green"
               variant="outlined"
-              onChange={handleGreenChange}
-              value={green}
+              onChange={handleColorChange('green')}
+              value={color.green}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={3} xs={12}>
             <TextField
               fullWidth
               label="Blue"
               variant="outlined"
-              onChange={handleBlueChange}
-              value={blue}
+              onChange={handleColorChange('blue')}
+              value={color.blue}
+            />
+          </Grid>
+
+          <Grid item md={3} xs={12}>
+            <TextField
+              fullWidth
+              label="Alpha"
+              variant="outlined"
+              onChange={handleColorChange('alpha')}
+              value={color.alpha}
             />
           </Grid>
           <Grid item md={6} xs={12}>
@@ -115,11 +164,11 @@ const ColorCode = () => {
               label="Hex"
               variant="outlined"
               onChange={handleHexChange}
-              value={hex}
+              value={color.hex}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <ColorLensIcon style={{ color: hex }} />
+                    <ColorLensIcon style={{ color: color.hex }} />
                   </InputAdornment>
                 )
               }}
