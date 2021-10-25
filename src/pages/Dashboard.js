@@ -14,6 +14,13 @@ const Dashboard = () => {
     FastGasPrice: null
   })
 
+  const [gasTrackerPolygon, setGasTrackerPolygon] = useState({
+    LastBlock: null,
+    SafeGasPrice: null,
+    ProposeGasPrice: null,
+    FastGasPrice: null
+  })
+
   const [price, setPrice] = useState({
     ethbtc: null,
     ethbtc_timestamp: null,
@@ -80,6 +87,18 @@ const Dashboard = () => {
           (error) => console.log('fetch api error', error)
         )
     })
+
+    // fetch polygon gas price
+    fetch(
+      'https://api.polygonscan.com/api?module=gastracker&action=gasoracle&apikey=2K8F36H5S2MUU7DT3FUF588789QU6FXIZZ'
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result?.message === 'OK') setGasTrackerPolygon(result?.result)
+        },
+        (error) => console.log('fetch api error', error)
+      )
   }, [])
 
   return (
@@ -95,6 +114,7 @@ const Dashboard = () => {
         }}>
         <Container maxWidth={false}>
           <Grid container spacing={3}>
+            {/* Ethereum Gas Tracker */}
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <DashboardCard
                 title="Low"
@@ -156,6 +176,61 @@ const Dashboard = () => {
               />
             </Grid>
 
+            {/* Polygon Gas Tracker */}
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Low"
+                content={gasTrackerPolygon?.SafeGasPrice}
+                description="Polygon Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: green[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
+            </Grid>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Average"
+                content={gasTrackerPolygon?.ProposeGasPrice}
+                description="Polygon Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: blue[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Fast"
+                content={gasTrackerPolygon?.FastGasPrice}
+                description="Polygon Gas Tracker"
+                icon={
+                  <Avatar
+                    sx={{
+                      backgroundColor: red[600],
+                      height: 56,
+                      width: 56
+                    }}>
+                    <MoneyIcon />
+                  </Avatar>
+                }
+              />
+            </Grid>
+
+            {/* prices */}
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <DashboardCard
                 title="ETH USD Price"
