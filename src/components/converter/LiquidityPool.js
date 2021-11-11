@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -25,17 +25,47 @@ const LiquidityPool = () => {
   }
 
   const [liquidity, setLiquidity] = useState(initialState)
-
   const [isPutApple, setIsPutApple] = useState(true)
-  const [tradeAmount, setTradeAmount] = useState(0)
+  const [tradeAmount, setTradeAmount] = useState(20)
 
+  const handleAppleOnChange = (event) => {
+    const apple = Number(event.target.value)
+
+    setLiquidity((prevState) => ({
+      ...prevState,
+      default: {
+        ...prevState.default,
+        apple: apple,
+        k: apple * prevState.default.potato
+      },
+      current: {
+        apple: apple,
+        potato: prevState.default.potato
+      }
+    }))
+  }
+  const handlePotatoOnChange = (event) => {
+    const potato = Number(event.target.value)
+
+    setLiquidity((prevState) => ({
+      ...prevState,
+      default: {
+        ...prevState.default,
+        potato: potato,
+        k: potato * prevState.default.apple
+      },
+      current: {
+        apple: prevState.default.apple,
+        potato: potato
+      }
+    }))
+  }
   const handleTradeActionOnChange = (event) => setIsPutApple(event.target.value === 'apple')
   const handleTradeAmountOnChange = (event) => setTradeAmount(Number(event.target.value))
   const handleTradeOnClick = () => {
     if (tradeAmount <= 0) return
 
     let newAppleLiquidity, newPotatoLiquidity, receiveAmount
-
     if (isPutApple) {
       newAppleLiquidity = liquidity.current.apple + tradeAmount
       newPotatoLiquidity = liquidity.default.k / newAppleLiquidity
@@ -69,25 +99,27 @@ const LiquidityPool = () => {
 
   return (
     <Card>
-      <CardHeader title="Liquidity Pool" />
+      <CardHeader title="Liquidity Pool - XYK model" />
       <Divider />
       <CardContent>
         <Grid container spacing={3}>
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
-              label="Apple"
+              label="Initial liquidity: Apple"
               variant="outlined"
               value={liquidity.default.apple}
+              onChange={handleAppleOnChange}
               disabled={liquidity.history.length > 0}
             />
           </Grid>
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
-              label="Potato"
+              label="Initial liquidity: Potato"
               variant="outlined"
               value={liquidity.default.potato}
+              onChange={handlePotatoOnChange}
               disabled={liquidity.history.length > 0}
             />
           </Grid>
@@ -159,12 +191,26 @@ const LiquidityPool = () => {
           </Grid>
 
           <Grid item md={3} xs={3}>
-            <Button color="primary" variant="contained" onClick={handleTradeOnClick}>
+            <Button
+              fullWidth
+              color="info"
+              variant="contained"
+              onClick={handleTradeOnClick}
+              sx={{
+                height: '100%'
+              }}>
               Trade
             </Button>
           </Grid>
           <Grid item md={3} xs={3}>
-            <Button color="secondary" variant="contained" onClick={handleResetOnClick}>
+            <Button
+              fullWidth
+              color="warning"
+              variant="outlined"
+              onClick={handleResetOnClick}
+              sx={{
+                height: '100%'
+              }}>
               Reset
             </Button>
           </Grid>

@@ -11,7 +11,6 @@
 - DeFi
   - Connect ETH wallet
 
-
 ### Ref
 
-Free Material-UI Kit: https://material-kit-react.devias.io/app/dashboard
+Free Material-UI Kit: https://material-kit-react.devias.io/
