@@ -1,6 +1,5 @@
 .wrapper {
   display: -ms-flexbox;
-  display: box;
   display: flex;
   -o-box-align: center;
   align-items: center;
