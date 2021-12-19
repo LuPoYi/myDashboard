@@ -9,6 +9,7 @@ import Gwei from 'src/components/converter/Gwei'
 import Birthday from 'src/components/converter/Birthday'
 import DateCountdown from 'src/components/converter/DateCountdown'
 import LiquidityPool from 'src/components/converter/LiquidityPool'
+import DepositAndBorrow from 'src/components/converter/DepositAndBorrow'
 
 const ConverterList = () => (
   <>
@@ -23,6 +24,9 @@ const ConverterList = () => (
       }}>
       <Container maxWidth="lg">
         <Grid container spacing={3}>
+          <Grid item lg={6} md={6} xs={12}>
+            <DepositAndBorrow />
+          </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <LiquidityPool />
           </Grid>
