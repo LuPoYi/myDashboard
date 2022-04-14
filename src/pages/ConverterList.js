@@ -10,6 +10,7 @@ import Birthday from 'src/components/converter/Birthday'
 import DateCountdown from 'src/components/converter/DateCountdown'
 import LiquidityPool from 'src/components/converter/LiquidityPool'
 import DepositAndBorrow from 'src/components/converter/DepositAndBorrow'
+import AsciiCode from 'src/components/converter/AsciiCode'
 
 const ConverterList = () => (
   <>
@@ -38,6 +39,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Base64 />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <AsciiCode />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <CamelCase />
