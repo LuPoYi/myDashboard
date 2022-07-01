@@ -1,75 +1,106 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
 import { Card, CardHeader, CardContent, Divider, Grid, TextField } from '@material-ui/core'
 
+const toCamelCase = (str) => {
+  let ans = ''
+  str.split(' ').forEach((element, index) => {
+    if (element.length > 0) {
+      let item = element.toLowerCase()
+      ans += index === 0 ? item : item[0].toUpperCase() + item.slice(1)
+    }
+  })
+  return ans
+}
+
+const toKebabCase = (str) => {
+  let ans = ''
+  str.split(' ').forEach((element, index) => {
+    if (element.length > 0) {
+      let item = element.toLowerCase()
+      ans += index === 0 ? item : '-' + item
+    }
+  })
+  return ans
+}
+
+const toTitleCase = (str) => {
+  let ans = ''
+  str.split(' ').forEach((element, index) => {
+    if (element.length > 0) {
+      let item = element[0].toUpperCase() + element.slice(1).toLowerCase()
+      ans += index === 0 ? item : ' ' + item
+    }
+  })
+  return ans
+}
+
+const toSnakeCase = (str) => {
+  let ans = ''
+  str.split(' ').forEach((element, index) => {
+    if (element.length > 0) {
+      let item = element[0].toUpperCase() + element.slice(1).toLowerCase()
+      ans += index === 0 ? item : '_' + item
+    }
+  })
+  return ans
+}
+
+const initialState = {
+  text: '',
+  camelCase: '',
+  kebabCase: '',
+  titleCase: '',
+  snakeCase: '',
+  upperCase: '',
+  lowerCase: ''
+}
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'text':
+      return {
+        text: action.payload.text,
+        camelCase: toCamelCase(action.payload.text),
+        kebabCase: toKebabCase(action.payload.text),
+        titleCase: toTitleCase(action.payload.text),
+        snakeCase: toSnakeCase(action.payload.text),
+        upperCase: action.payload.text.toUpperCase(),
+        lowerCase: action.payload.text.toLowerCase()
+      }
+    case 'camelCase':
+      return { ...state, camelCase: action.payload.camelCase }
+    case 'kebabCase':
+      return { ...state, kebabCase: action.payload.kebabCase }
+    case 'titleCase':
+      return { ...state, titleCase: action.payload.titleCase }
+    case 'snakeCase':
+      return { ...state, snakeCase: action.payload.snakeCase }
+    case 'upperCase':
+      return { ...state, upperCase: action.payload.upperCase }
+    case 'lowerCase':
+      return { ...state, lowerCase: action.payload.lowerCase }
+    default:
+      throw new Error(`不存在的 action type: ${action.type}`)
+  }
+}
+
 function CamelCase() {
-  const [text, setText] = useState('')
-  const [camelCase, setCamelCase] = useState('')
-  const [kebabCase, setKebabCase] = useState('')
-  const [titleCase, setTitleCase] = useState('')
-  const [snakeCase, setSnakeCase] = useState('')
-  const [upperCase, setUpperCase] = useState('')
-  const [lowerCase, setLowerCase] = useState('')
+  const [states, dispatch] = useReducer(reducer, initialState)
+  const { text, camelCase, kebabCase, titleCase, snakeCase, upperCase, lowerCase } = states
 
-  const handleTextChange = (e) => {
-    setText(e.target.value)
-    setCamelCase(toCamelCase(e.target.value))
-    setKebabCase(toKebabCase(e.target.value))
-    setTitleCase(toTitleCase(e.target.value))
-    setSnakeCase(toSnakeCase(e.target.value))
-    setUpperCase(e.target.value.toUpperCase())
-    setLowerCase(e.target.value.toLowerCase())
-  }
-
-  const handleCamelCaseChange = (e) => setCamelCase(e.target.value)
-  const handleKebabCaseChange = (e) => setKebabCase(e.target.value)
-  const handleTitleCaseChange = (e) => setTitleCase(e.target.value)
-  const handleSnakeCaseChange = (e) => setSnakeCase(e.target.value)
-  const handleUpperCaseChange = (e) => setUpperCase(e.target.value)
-  const handleLowerCaseChange = (e) => setLowerCase(e.target.value)
-
-  function toCamelCase(str) {
-    let ans = ''
-    str.split(' ').forEach((element, index) => {
-      if (element.length > 0) {
-        let item = element.toLowerCase()
-        ans += index === 0 ? item : item[0].toUpperCase() + item.slice(1)
-      }
-    })
-    return ans
-  }
-
-  function toKebabCase(str) {
-    let ans = ''
-    str.split(' ').forEach((element, index) => {
-      if (element.length > 0) {
-        let item = element.toLowerCase()
-        ans += index === 0 ? item : '-' + item
-      }
-    })
-    return ans
-  }
-
-  function toTitleCase(str) {
-    let ans = ''
-    str.split(' ').forEach((element, index) => {
-      if (element.length > 0) {
-        let item = element[0].toUpperCase() + element.slice(1).toLowerCase()
-        ans += index === 0 ? item : ' ' + item
-      }
-    })
-    return ans
-  }
-
-  function toSnakeCase(str) {
-    let ans = ''
-    str.split(' ').forEach((element, index) => {
-      if (element.length > 0) {
-        let item = element[0].toUpperCase() + element.slice(1).toLowerCase()
-        ans += index === 0 ? item : '_' + item
-      }
-    })
-    return ans
-  }
+  const handleTextChange = (e) => dispatch({ type: 'text', payload: { text: e.target.value } })
+  const handleCamelCaseChange = (e) =>
+    dispatch({ type: 'camelCase', payload: { camelCase: e.target.value } })
+  const handleKebabCaseChange = (e) =>
+    dispatch({ type: 'kebabCase', payload: { kebabCase: e.target.value } })
+  const handleTitleCaseChange = (e) =>
+    dispatch({ type: 'titleCase', payload: { titleCase: e.target.value } })
+  const handleSnakeCaseChange = (e) =>
+    dispatch({ type: 'snakeCase', payload: { snakeCase: e.target.value } })
+  const handleUpperCaseChange = (e) =>
+    dispatch({ type: 'upperCase', payload: { upperCase: e.target.value } })
+  const handleLowerCaseChange = (e) =>
+    dispatch({ type: 'lowerCase', payload: { lowerCase: e.target.value } })
 
   return (
     <Card>

@@ -16,7 +16,7 @@ const Base64 = () => {
     setBase64(value)
   }
 
-  const base64HandleChange = (e) => {
+  const handleBase64Change = (e) => {
     setBase64(e.target.value)
     let value
     try {
@@ -48,7 +48,7 @@ const Base64 = () => {
               fullWidth
               label="Base64"
               variant="outlined"
-              onChange={base64HandleChange}
+              onChange={handleBase64Change}
               value={base64}
             />
           </Grid>
