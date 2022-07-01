@@ -1,20 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
 import {
   Box,
   Card,
-  CardHeader,
   CardContent,
+  CardHeader,
   Divider,
   Grid,
+  MenuItem,
   TextField,
   Typography,
-  MenuItem
 } from '@material-ui/core'
 
 const CompoundInterest = () => {
   const [compoundInterval, setCompoundInterval] = useState('yearly')
   const [initialBalance, setInitialBalance] = useState(1000)
-  const [annualPercentageRate, setAnnualPercentageRate] = useState(20)
+  const [annualPercentageRate, setAnnualPercentageRate] = useState(12)
+  const [count, setCount] = useState(0)
   const [year, setYear] = useState(5)
   const [month, setMonth] = useState(0)
   const [day, setDay] = useState(0)
@@ -25,39 +27,67 @@ const CompoundInterest = () => {
     returnOnInvestment: 0
   })
 
-  const handleCompoundIntervalOnChange = (event) => {
-    setCompoundInterval(event.target.value)
-  }
-
-  const handleInitialBalanceOnChange = (event) => {
-    setInitialBalance(event.target.value)
-  }
-
-  const handleAnnualPercentageRateOnChange = (event) => {
-    setAnnualPercentageRate(event.target.value)
-  }
-
+  const handleCompoundIntervalOnChange = (event) => setCompoundInterval(event.target.value)
+  const handleInitialBalanceOnChange = (event) => setInitialBalance(event.target.value)
+  const handleAnnualPercentageRateOnChange = (event) => setAnnualPercentageRate(event.target.value)
   const handleYearOnChange = (event) => setYear(event.target.value)
   const handleMonthOnChange = (event) => setMonth(event.target.value)
   const handleDayOnChange = (event) => setDay(event.target.value)
   const calculateNextRoundProfit = (amount, rate) => amount * (1 + rate)
 
   useEffect(() => {
+    setCount(0)
     let finalBalance = initialBalance
-    for (let y = 0; y < year; y++) {
-      finalBalance = calculateNextRoundProfit(finalBalance, annualPercentageRate / 100)
+    let compoundRate = 0
+    let compoundCount = 0
+
+    switch (compoundInterval) {
+      case 'yearly': {
+        compoundRate = annualPercentageRate / 100
+        if (year > 0) compoundCount += year
+        break
+      }
+
+      case 'monthly': {
+        compoundRate = annualPercentageRate / 100 / 12
+        if (year > 0) compoundCount += year * 12
+        if (month > 0) compoundCount += month
+        break
+      }
+
+      case 'daily': {
+        compoundRate = annualPercentageRate / 100 / 365
+        if (year > 0) compoundCount += year * 365
+        if (month > 0) compoundCount += month * 30
+        if (day > 0) compoundCount += day
+        break
+      }
+
+      case 'hourly': {
+        compoundRate = annualPercentageRate / 100 / 365 / 24
+        if (year > 0) compoundCount += year * 365 * 24
+        if (month > 0) compoundCount += month * 30 * 24
+        if (day > 0) compoundCount += day * 24
+        break
+      }
+    }
+
+    for (let i = 0; i < compoundCount; i++) {
+      finalBalance = calculateNextRoundProfit(finalBalance, compoundRate)
     }
 
     const totalInterest = finalBalance - initialBalance
     const annualPercentageYield = (totalInterest / year / initialBalance) * 100
     const returnOnInvestment = (finalBalance / initialBalance) * 100
+
     setResult({
       totalInterest: totalInterest?.toFixed(2),
       annualPercentageYield: annualPercentageYield?.toFixed(2),
       finalBalance: finalBalance?.toFixed(2),
       returnOnInvestment: returnOnInvestment?.toFixed(2)
     })
-  }, [compoundInterval, initialBalance, annualPercentageRate, year, month])
+    setCount(compoundCount)
+  }, [compoundInterval, initialBalance, annualPercentageRate, year, month, day])
 
   return (
     <Card>
@@ -112,17 +142,10 @@ const CompoundInterest = () => {
               variant="outlined"
               onChange={handleMonthOnChange}
               value={month}
-              disabled
             />
           </Grid>
           <Grid item md={4} xs={12}>
-            <TextField
-              label="Day"
-              variant="outlined"
-              onChange={handleDayOnChange}
-              value={day}
-              disabled
-            />
+            <TextField label="Day" variant="outlined" onChange={handleDayOnChange} value={day} />
           </Grid>
         </Grid>
       </CardContent>
@@ -137,7 +160,7 @@ const CompoundInterest = () => {
           {`Get: ${result?.totalInterest}`}
         </Typography>
         <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-          {`Total: ${result?.finalBalance} (${result?.annualPercentageYield}% APY / ${result?.returnOnInvestment}% ROI)`}
+          {`Total: ${result?.finalBalance} (${result?.annualPercentageYield}% APY / ${result?.returnOnInvestment}% ROI) count:${count}`}
         </Typography>
       </Box>
     </Card>
