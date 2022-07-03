@@ -1,13 +1,29 @@
-import { useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, Divider, Grid, TextField } from '@material-ui/core'
+import { useEffect, useState } from 'react'
+
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField,
+  Typography
+} from '@material-ui/core'
 import DatePicker from '@material-ui/lab/DatePicker'
 
 const Birthday = () => {
   const [age, setAge] = useState('') // 1Y 2M 3D
+  const [days, setDays] = useState(0)
   const [birthday, setBirthday] = useState(new Date('1989-06-17'))
 
   const handleBirthdayOnChange = (value) => setBirthday(value)
-
+  // const isLeapYear = (year) =>
+  //   (year % 4 === 0 && year % 100 !== 0) ||
+  //   year % 400 ===
+  //     0 -
+  //       // var diff = Math.floor((Date.parse(str2) - Date.parse(str1)) / 86400000);
+  //       12069
   useEffect(() => {
     try {
       const ageDifMs = new Date(Date.now() - birthday)
@@ -15,6 +31,8 @@ const Birthday = () => {
       const ageMonth = ageDifMs.getMonth()
       const ageDay = ageDifMs.getDate()
       setAge(`${ageYear}Y ${ageMonth}M ${ageDay}D`)
+
+      setDays(Math.floor((Date.now() - Date.parse(birthday)) / 86400000))
     } catch (e) {
       console.log('error - birthday cannot convert', e)
     }
@@ -42,6 +60,17 @@ const Birthday = () => {
           </Grid>
         </Grid>
       </CardContent>
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}>
+        <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
+          Age in Days: {days}
+        </Typography>
+      </Box>
     </Card>
   )
 }
