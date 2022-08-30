@@ -1,16 +1,17 @@
-import { Helmet } from 'react-helmet'
-import { Box, Container, Grid } from '@material-ui/core'
-import CompoundInterest from 'src/components/converter/CompoundInterest'
-import Timestamp from 'src/components/converter/Timestamp'
+import AsciiCode from 'src/components/converter/AsciiCode'
 import Base64 from 'src/components/converter/Base64'
+import BinaryDecimalHex from 'src/components/converter/BinaryDecimalHex'
+import Birthday from 'src/components/converter/Birthday'
+import { Box, Container, Grid } from '@material-ui/core'
 import CamelCase from 'src/components/converter/CamelCase'
 import ColorCode from 'src/components/converter/ColorCode'
-import Gwei from 'src/components/converter/Gwei'
-import Birthday from 'src/components/converter/Birthday'
+import CompoundInterest from 'src/components/converter/CompoundInterest'
 import DateCountdown from 'src/components/converter/DateCountdown'
-import LiquidityPool from 'src/components/converter/LiquidityPool'
 import DepositAndBorrow from 'src/components/converter/DepositAndBorrow'
-import AsciiCode from 'src/components/converter/AsciiCode'
+import Gwei from 'src/components/converter/Gwei'
+import { Helmet } from 'react-helmet'
+import LiquidityPool from 'src/components/converter/LiquidityPool'
+import Timestamp from 'src/components/converter/Timestamp'
 
 const ConverterList = () => (
   <>
@@ -51,6 +52,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Gwei />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <BinaryDecimalHex />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Birthday />
