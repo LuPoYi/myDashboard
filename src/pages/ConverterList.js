@@ -8,6 +8,7 @@ import ColorCode from 'src/components/converter/ColorCode'
 import CompoundInterest from 'src/components/converter/CompoundInterest'
 import DateCountdown from 'src/components/converter/DateCountdown'
 import DepositAndBorrow from 'src/components/converter/DepositAndBorrow'
+import GridTrading from 'src/components/converter/GridTrading'
 import Gwei from 'src/components/converter/Gwei'
 import { Helmet } from 'react-helmet'
 import LiquidityPool from 'src/components/converter/LiquidityPool'
@@ -26,6 +27,9 @@ const ConverterList = () => (
       }}>
       <Container maxWidth="lg">
         <Grid container spacing={3}>
+          <Grid item lg={6} md={6} xs={12}>
+            <GridTrading />
+          </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <DepositAndBorrow />
           </Grid>

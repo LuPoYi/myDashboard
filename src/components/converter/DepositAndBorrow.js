@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, Divider, Grid, TextField } from '@material-ui/core'
+import { useEffect, useState } from 'react'
+
+import { Card, CardContent, CardHeader, Divider, Grid, TextField } from '@material-ui/core'
 
 const DepositAndBorrow = () => {
   const [data, setData] = useState({
@@ -44,6 +45,7 @@ const DepositAndBorrow = () => {
       depositTotal,
       borrowAmount
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depositAmount, depositRewardAPY, loanToValue])
 
   useEffect(() => {
@@ -61,6 +63,7 @@ const DepositAndBorrow = () => {
       finalAPY,
       finalBalance
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [borrowAmount, borrowFeeAPY, borrowRewardAPY])
 
   const handleDepositAmountOnChange = (event) =>
