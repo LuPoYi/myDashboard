@@ -1,18 +1,18 @@
-import { Navigate } from 'react-router-dom'
-import DashboardLayout from 'src/components/DashboardLayout'
-import MainLayout from 'src/components/MainLayout'
 import Account from 'src/pages/Account'
-import CustomerList from 'src/pages/CustomerList'
 import ConverterList from 'src/pages/ConverterList'
-import DeFiLab from 'src/pages/DeFiLab'
-import Dashboard from 'src/pages/Dashboard'
-import ProductList from 'src/pages/ProductList'
-import Pomodoro from 'src/pages/Pomodoro'
 import Countdown from 'src/pages/Countdown'
 import CountdownPage from 'src/pages/CountdownPage'
-import Settings from 'src/pages/Settings'
+import CustomerList from 'src/pages/CustomerList'
+import Dashboard from 'src/pages/Dashboard'
+import DashboardLayout from 'src/components/DashboardLayout'
 import DeFiPortfolio from 'src/pages/DeFiPortfolio'
+import EvmTools from 'src/pages/EvmTools'
+import MainLayout from 'src/components/MainLayout'
+import { Navigate } from 'react-router-dom'
 import NotFound from 'src/pages/NotFound'
+import Pomodoro from 'src/pages/Pomodoro'
+import ProductList from 'src/pages/ProductList'
+import Settings from 'src/pages/Settings'
 
 const routes = [
   {
@@ -22,7 +22,7 @@ const routes = [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
       { path: 'converters', element: <ConverterList /> },
-      { path: 'defi', element: <DeFiLab /> },
+      { path: 'evmTools', element: <EvmTools /> },
       { path: 'pomodoro', element: <Pomodoro /> },
       { path: 'countdown', element: <Countdown /> },
       { path: 'dashboard', element: <Dashboard /> },

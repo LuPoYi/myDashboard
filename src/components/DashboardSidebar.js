@@ -1,17 +1,18 @@
 import { useEffect } from 'react'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
-import PropTypes from 'prop-types'
+
 import { Avatar, Box, Divider, Drawer, List, Typography } from '@material-ui/core'
 import {
   BarChart as BarChartIcon,
+  Clock as ClockIcon,
+  DollarSign as DollarSignIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  Users as UsersIcon,
-  Clock as ClockIcon,
-  DollarSign as DollarSignIcon
+  Users as UsersIcon
 } from 'react-feather'
 import NavItem from './NavItem'
+import PropTypes from 'prop-types'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 const user = {
   avatar: '/static/images/avatars/hello.png',
@@ -31,9 +32,9 @@ const items = [
     title: 'Converters'
   },
   {
-    href: '/app/defi',
+    href: '/app/evmTools',
     icon: ShoppingBagIcon,
-    title: 'DeFi Lab'
+    title: 'EVM Tools'
   },
   {
     href: '/app/pomodoro',

@@ -18,12 +18,7 @@ const Birthday = () => {
   const [birthday, setBirthday] = useState(new Date('1989-06-17'))
 
   const handleBirthdayOnChange = (value) => setBirthday(value)
-  // const isLeapYear = (year) =>
-  //   (year % 4 === 0 && year % 100 !== 0) ||
-  //   year % 400 ===
-  //     0 -
-  //       // var diff = Math.floor((Date.parse(str2) - Date.parse(str1)) / 86400000);
-  //       12069
+
   useEffect(() => {
     try {
       const ageDifMs = new Date(Date.now() - birthday)
