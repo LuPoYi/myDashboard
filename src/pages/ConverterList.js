@@ -6,6 +6,7 @@ import { Box, Container, Grid } from '@material-ui/core'
 import CamelCase from 'src/components/converter/CamelCase'
 import ColorCode from 'src/components/converter/ColorCode'
 import CompoundInterest from 'src/components/converter/CompoundInterest'
+import DCAInterest from 'src/components/converter/DCAInterest'
 import DateCountdown from 'src/components/converter/DateCountdown'
 import DepositAndBorrow from 'src/components/converter/DepositAndBorrow'
 import GridTrading from 'src/components/converter/GridTrading'
@@ -38,6 +39,9 @@ const ConverterList = () => (
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <CompoundInterest />
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <DCAInterest />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
             <Timestamp />
