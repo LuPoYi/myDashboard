@@ -32,6 +32,11 @@ const items = [
     title: 'Converters'
   },
   {
+    href: '/app/projects',
+    icon: ShoppingBagIcon,
+    title: 'Projects'
+  },
+  {
     href: '/app/evmTools',
     icon: ShoppingBagIcon,
     title: 'EVM Tools'

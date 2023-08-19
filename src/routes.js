@@ -12,6 +12,7 @@ import { Navigate } from 'react-router-dom'
 import NotFound from 'src/pages/NotFound'
 import Pomodoro from 'src/pages/Pomodoro'
 import ProductList from 'src/pages/ProductList'
+import ProjectList from 'src/pages/ProjectList'
 import Settings from 'src/pages/Settings'
 
 const routes = [
@@ -22,6 +23,7 @@ const routes = [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
       { path: 'converters', element: <ConverterList /> },
+      { path: 'projects', element: <ProjectList /> },
       { path: 'evmTools', element: <EvmTools /> },
       { path: 'pomodoro', element: <Pomodoro /> },
       { path: 'countdown', element: <Countdown /> },
