@@ -1,20 +1,15 @@
-import { useState, useEffect } from 'react'
-import { Helmet } from 'react-helmet'
-import { Avatar, Box, Grid, Container } from '@material-ui/core'
+import { useEffect, useState } from 'react'
+
+import { Avatar, Box, Container, Grid } from '@material-ui/core'
 import DashboardCard from 'src/components/dashboard/DashboardCard'
-import { red, blue, green } from '@material-ui/core/colors'
+import { Helmet } from 'react-helmet'
 import MoneyIcon from '@material-ui/icons/Money'
-const BINANCE_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT']
+import { green } from '@material-ui/core/colors'
+
+const BINANCE_SYMBOLS = ['BTCUSDT', 'ETHUSDT']
 
 const Dashboard = () => {
   const [gasTracker, setGasTracker] = useState({
-    LastBlock: null,
-    SafeGasPrice: null,
-    ProposeGasPrice: null,
-    FastGasPrice: null
-  })
-
-  const [gasTrackerPolygon, setGasTrackerPolygon] = useState({
     LastBlock: null,
     SafeGasPrice: null,
     ProposeGasPrice: null,
@@ -28,31 +23,7 @@ const Dashboard = () => {
     ethusd_timestamp: null
   })
 
-  const [binanceTickers, setBinanceTickers] = useState([
-    {
-      symbol: 'BTCUSDT',
-      priceChange: '-465.43000000',
-      priceChangePercent: '-0.983',
-      weightedAvgPrice: '47940.17828752',
-      prevClosePrice: '47344.87000000',
-      lastPrice: '46879.44000000',
-      lastQty: '0.00041000',
-      bidPrice: '46885.74000000',
-      bidQty: '0.15546000',
-      askPrice: '46885.75000000',
-      askQty: '0.07967000',
-      openPrice: '47344.87000000',
-      highPrice: '49352.84000000',
-      lowPrice: '46560.01000000',
-      volume: '52341.26742400',
-      quoteVolume: '2509249692.10130679',
-      openTime: 1629882369964,
-      closeTime: 1629968769964,
-      firstId: 1024000300,
-      lastId: 1025862617,
-      count: 1862318
-    }
-  ])
+  const [binanceTickers, setBinanceTickers] = useState([])
 
   useEffect(() => {
     fetch(
@@ -87,18 +58,6 @@ const Dashboard = () => {
           (error) => console.log('fetch api error', error)
         )
     })
-
-    // fetch polygon gas price
-    fetch(
-      'https://api.polygonscan.com/api?module=gastracker&action=gasoracle&apikey=2K8F36H5S2MUU7DT3FUF588789QU6FXIZZ'
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result?.message === 'OK') setGasTrackerPolygon(result?.result)
-        },
-        (error) => console.log('fetch api error', error)
-      )
   }, [])
 
   return (
@@ -117,48 +76,13 @@ const Dashboard = () => {
             {/* Ethereum Gas Tracker */}
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <DashboardCard
-                title="Low"
-                content={gasTracker?.SafeGasPrice}
+                title="Low/Average/Fast"
+                content={`${gasTracker?.SafeGasPrice}/${gasTracker?.ProposeGasPrice}/${gasTracker?.FastGasPrice}`}
                 description="Ethereum Gas Tracker"
                 icon={
                   <Avatar
                     sx={{
                       backgroundColor: green[600],
-                      height: 56,
-                      width: 56
-                    }}>
-                    <MoneyIcon />
-                  </Avatar>
-                }
-              />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <DashboardCard
-                title="Average"
-                content={gasTracker?.ProposeGasPrice}
-                description="Ethereum Gas Tracker"
-                icon={
-                  <Avatar
-                    sx={{
-                      backgroundColor: blue[600],
-                      height: 56,
-                      width: 56
-                    }}>
-                    <MoneyIcon />
-                  </Avatar>
-                }
-              />
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <DashboardCard
-                title="Fast"
-                content={gasTracker?.FastGasPrice}
-                description="Ethereum Gas Tracker"
-                icon={
-                  <Avatar
-                    sx={{
-                      backgroundColor: red[600],
                       height: 56,
                       width: 56
                     }}>
@@ -173,60 +97,6 @@ const Dashboard = () => {
                 title="Last Block"
                 content={gasTracker?.LastBlock}
                 description="Ethereum gas tracker"
-              />
-            </Grid>
-
-            {/* Polygon Gas Tracker */}
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <DashboardCard
-                title="Low"
-                content={gasTrackerPolygon?.SafeGasPrice}
-                description="Polygon Gas Tracker"
-                icon={
-                  <Avatar
-                    sx={{
-                      backgroundColor: green[600],
-                      height: 56,
-                      width: 56
-                    }}>
-                    <MoneyIcon />
-                  </Avatar>
-                }
-              />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <DashboardCard
-                title="Average"
-                content={gasTrackerPolygon?.ProposeGasPrice}
-                description="Polygon Gas Tracker"
-                icon={
-                  <Avatar
-                    sx={{
-                      backgroundColor: blue[600],
-                      height: 56,
-                      width: 56
-                    }}>
-                    <MoneyIcon />
-                  </Avatar>
-                }
-              />
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <DashboardCard
-                title="Fast"
-                content={gasTrackerPolygon?.FastGasPrice}
-                description="Polygon Gas Tracker"
-                icon={
-                  <Avatar
-                    sx={{
-                      backgroundColor: red[600],
-                      height: 56,
-                      width: 56
-                    }}>
-                    <MoneyIcon />
-                  </Avatar>
-                }
               />
             </Grid>
 
